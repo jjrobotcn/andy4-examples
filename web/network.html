@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>network</title>
+  </head>
+  <body>
+    <h1>Network</h1>
+    <pre id="res"></pre>
+    <script>
+      fetch("http://10.10.10.2:81/api/v2/network/get_network_device_info", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          with_credential: true,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const info = data["network_device_info"];
+
+          document.querySelector("#res").innerHTML = JSON.stringify(info);
+
+          console.log(info);
+          // {"ssid":"JJRobot","credential":"SECRET"}
+        })
+        .catch((err) => console.error(err));
+    </script>
+  </body>
+</html>

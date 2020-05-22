@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech</title>
+  </head>
+  <body>
+    <h1>Speech</h1>
+    <pre id="output"></pre>
+    <script>
+      const output = document.querySelector("#output");
+
+      const ws = new WebSocket(
+        "ws://10.10.10.2:81/api/v2/speech/listen_speech_event"
+      );
+      ws.onmessage = (e) => {
+        const res = JSON.parse(e.data);
+        if (res.result_info) {
+          const out = `WORDS: ${res.result_info.words}, COMPLETE: ${res.result_info.sentence_complete}`;
+
+          output.innerHTML = out;
+
+          console.log(out);
+          // WORDS: 我,想,看看,今天,的,天气, COMPLETE: false
+          // WORDS: 预报,, COMPLETE: true
+        } else if (res.wake_up_info) {
+          const out = `ANGLE: ${res.wake_up_info.angle}, BEAM: ${res.wake_up_info.beam}`;
+
+          output.innerHTML = out;
+
+          console.log(out);
+          // ANGLE: 105, BEAM: 0
+        }
+      };
+    </script>
+  </body>
+</html>
