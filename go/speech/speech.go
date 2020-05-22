@@ -39,9 +39,13 @@ func main() {
 		case *speechpb.ListenSpeechEventResponse_WakeUpInfo:
 			wakeupInfo := res.GetWakeUpInfo()
 			fmt.Printf("ANGLE: %d, BEAM: %d\n", wakeupInfo.GetAngle(), wakeupInfo.GetBeam())
+			// ANGLE: 36, BEAM: 1
+
 		case *speechpb.ListenSpeechEventResponse_ResultInfo:
 			resultInfo := res.GetResultInfo()
 			fmt.Printf("WORDS: %#v, COMPLETE: %t\n", resultInfo.GetWords(), resultInfo.GetSentenceComplete())
+			// WORDS: []string{"我", "想", "看看"}, COMPLETE: false
+			// WORDS: []string{"今天", "的", "天气预报", ""}, COMPLETE: true
 		}
 	}
 
